@@ -3,6 +3,10 @@
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
+
+	$(".thumbnail a").click(function(e) {
+		e.preventDefault();
+	})
 })
 
 /*
@@ -27,4 +31,16 @@ function addProjectDetails(e) {
 	var idNumber = projectID.substr('project'.length);
 
 	console.log("User clicked on project " + idNumber);
+
+	var url = "/project/" + idNumber;
+	$.get(url, add);
+}
+
+function add(result) {
+	console.log(result);
+	var selector = "#project" + result['id'] + " .details";
+	var HTML = '<img src="' + result['image'] + '" class="detailsImage">' +
+    '<p>' + result['title'] + '</p>' + '<p><small>' + result['date'] +
+    '</small></p>' + result['summary'];
+	$(selector).html(HTML);
 }
